@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './ExpenseForm.css';
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState('');
@@ -12,21 +12,21 @@ const ExpenseForm = () => {
   //   date: '',
   // });
 
-  // const titleChangeHandler = (event) => {
+  // const handleTitleChange = (event) => {
   //   const setUserInput((prevState) => {
   //     return { ...prevState, title: event.target.value }
   //   })
   // }
 
-  const titleChangeHandler = (event) => {
+  const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
 
-  const amountChangeHandler = (event) => {
+  const handleAmountChange = (event) => {
     setAmount(event.target.value);
   };
 
-  const dateChangeHandler = (event) => {
+  const handleDateChange = (event) => {
     setDate(event.target.value);
   };
 
@@ -39,7 +39,11 @@ const ExpenseForm = () => {
       date: new Date(date),
     };
 
-    console.log(expenseData);
+    props.onSaveExpenseData(expenseData);
+
+    setTitle('');
+    setAmount('');
+    setDate('');
   };
 
   return (
@@ -47,7 +51,7 @@ const ExpenseForm = () => {
       <div className='new-expense__controls'>
         <div className='new-expense__control'>
           <label>Title</label>
-          <input type='text' onChange={titleChangeHandler} />
+          <input type='text' value={title} onChange={handleTitleChange} />
         </div>
         <div className='new-expense__control'>
           <label>Amount</label>
@@ -55,7 +59,8 @@ const ExpenseForm = () => {
             type='number'
             min='0.01'
             step='0.01'
-            onChange={amountChangeHandler}
+            onChange={handleAmountChange}
+            value={amount}
           />
         </div>
         <div className='new-expense__control'>
@@ -64,7 +69,8 @@ const ExpenseForm = () => {
             type='date'
             min='2019-02-02'
             max='2022-12-31'
-            onChange={dateChangeHandler}
+            onChange={handleDateChange}
+            value={date}
           />
         </div>
       </div>
